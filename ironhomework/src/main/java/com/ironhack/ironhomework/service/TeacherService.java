@@ -13,17 +13,24 @@ public class TeacherService {
     public void addTeacher(Teacher teacher) {
         teachers.add(teacher);
     }
-
     public List<Teacher> getAllTeachers() {
         return new ArrayList<>(teachers);
     }
-
     public Optional<Teacher> getTeacherById(String id) {
         return teachers.stream()
                 .filter(t -> t.getTeacherId().equalsIgnoreCase(id))
                 .findFirst();
     }
-
+    public Teacher updateTeacher(String id, Teacher updatedData) {
+        Teacher teacher = getTeacherById(id)
+                .orElseThrow(() -> new RuntimeException("Müəllim tapılmadı: " + id));
+        teacher.setName(updatedData.getName());
+        teacher.setSalary(updatedData.getSalary());
+        return teacher;
+    }
+    public void deleteTeacher(String id) {
+        teachers.removeIf(t -> t.getTeacherId().equalsIgnoreCase(id));
+    }
     public double getTotalSalaries() {
         return teachers.stream().mapToDouble(Teacher::getSalary).sum();
     }
