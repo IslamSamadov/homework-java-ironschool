@@ -1,10 +1,16 @@
 package com.ironhack.ironhomework.model;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class Student {
     private static int idCounter = 1;
     private String studentId;
+    @NotBlank
     private String name;
+    @NotBlank
     private String address;
+    @Email
     private String email;
     private Course course;
 
@@ -16,14 +22,12 @@ public class Student {
         this.course = null;
     }
 
-    // Getter-lər
     public String getStudentId() { return studentId; }
     public String getName() { return name; }
     public String getAddress() { return address; }
     public String getEmail() { return email; }
     public Course getCourse() { return course; }
 
-    // Setter-lər
     public void setName(String name) { this.name = name; }
     public void setAddress(String address) { this.address = address; }
     public void setEmail(String email) { this.email = email; }
