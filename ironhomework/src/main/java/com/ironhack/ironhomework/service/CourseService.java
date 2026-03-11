@@ -35,7 +35,7 @@ public class CourseService {
 
     public void updateCoursePrice(String id, double newPrice) {
         Course course = getCourseById(id)
-                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı"));
+                .orElseThrow(() -> new RuntimeException("Course not found"));
         course.setPrice(newPrice);
     }
 
@@ -46,9 +46,9 @@ public class CourseService {
 
     public void enrollStudent(String studentId, String courseId) {
         Student student = studentService.getStudentById(studentId)
-                .orElseThrow(() -> new RuntimeException("Tələbə tapılmadı"));
+                .orElseThrow(() -> new RuntimeException("Student not found"));
         Course course = getCourseById(courseId)
-                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı"));
+                .orElseThrow(() -> new RuntimeException("Course not found"));
 
         student.setCourse(course);
         course.updateMoneyEarned(course.getPrice());
@@ -56,9 +56,9 @@ public class CourseService {
 
     public void assignTeacher(String teacherId, String courseId) {
         Teacher teacher = teacherService.getTeacherById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Müəllim tapılmadı"));
+                .orElseThrow(() -> new RuntimeException("Teacher not found"));
         Course course = getCourseById(courseId)
-                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı"));
+                .orElseThrow(() -> new RuntimeException("Course not found"));
 
         course.setTeacher(teacher);
     }

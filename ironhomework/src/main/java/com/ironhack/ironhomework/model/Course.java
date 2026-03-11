@@ -1,10 +1,16 @@
 package com.ironhack.ironhomework.model;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class Course {
     private static int idCounter = 1;
     private String courseId;
+    @NotBlank
     private String name;
+    @Min(0)
     private double price;
+    @Min(0)
     private double money_earned;
     private Teacher teacher;
 
