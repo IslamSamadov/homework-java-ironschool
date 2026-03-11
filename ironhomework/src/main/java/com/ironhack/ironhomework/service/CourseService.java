@@ -32,26 +32,41 @@ public class CourseService {
                 .filter(c -> c.getCourseId().equalsIgnoreCase(id))
                 .findFirst();
     }
+
+    public void updateCoursePrice(String id, double newPrice) {
+        Course course = getCourseById(id)
+                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı"));
+        course.setPrice(newPrice);
+    }
+
+    public void deleteCourse(String id) {
+        courses.removeIf(c -> c.getCourseId().equalsIgnoreCase(id));
+    }
+
+
     public void enrollStudent(String studentId, String courseId) {
         Student student = studentService.getStudentById(studentId)
-                .orElseThrow(() -> new RuntimeException("Tələbə tapılmadı: " + studentId));
+                .orElseThrow(() -> new RuntimeException("Tələbə tapılmadı"));
         Course course = getCourseById(courseId)
-                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı: " + courseId));
+                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı"));
 
         student.setCourse(course);
         course.updateMoneyEarned(course.getPrice());
     }
+
     public void assignTeacher(String teacherId, String courseId) {
         Teacher teacher = teacherService.getTeacherById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Müəllim tapılmadı: " + teacherId));
+                .orElseThrow(() -> new RuntimeException("Müəllim tapılmadı"));
         Course course = getCourseById(courseId)
-                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı: " + courseId));
+                .orElseThrow(() -> new RuntimeException("Kurs tapılmadı"));
 
         course.setTeacher(teacher);
     }
+
+
     public double getProfit() {
         double totalEarned = courses.stream().mapToDouble(Course::getMoney_earned).sum();
-        double totalSpent = teacherService.getTotalSalaries();
-        return totalEarned - totalSpent;
+        double totalSalaries = teacherService.getTotalSalaries();
+        return totalEarned - totalSalaries;
     }
 }

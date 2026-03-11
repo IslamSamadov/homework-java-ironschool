@@ -24,6 +24,18 @@ public class TeacherService {
                 .findFirst();
     }
 
+    public Teacher updateTeacher(String id, Teacher updatedData) {
+        Teacher teacher = getTeacherById(id)
+                .orElseThrow(() -> new RuntimeException("Müəllim tapılmadı: " + id));
+        teacher.setName(updatedData.getName());
+        teacher.setSalary(updatedData.getSalary());
+        return teacher;
+    }
+
+    public void deleteTeacher(String id) {
+        teachers.removeIf(t -> t.getTeacherId().equalsIgnoreCase(id));
+    }
+
     public double getTotalSalaries() {
         return teachers.stream().mapToDouble(Teacher::getSalary).sum();
     }
