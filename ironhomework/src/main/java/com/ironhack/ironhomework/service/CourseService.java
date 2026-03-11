@@ -13,13 +13,16 @@ public class CourseService {
     private final List<Course> courses = new ArrayList<>();
     private final TeacherService teacherService;
     private final StudentService studentService;
+
     public CourseService(TeacherService teacherService, StudentService studentService) {
         this.teacherService = teacherService;
         this.studentService = studentService;
     }
+
     public void addCourse(Course course) {
         courses.add(course);
     }
+
     public List<Course> getAllCourses() {
         return new ArrayList<>(courses);
     }
@@ -29,14 +32,17 @@ public class CourseService {
                 .filter(c -> c.getCourseId().equalsIgnoreCase(id))
                 .findFirst();
     }
+
     public void updateCoursePrice(String id, double newPrice) {
         Course course = getCourseById(id)
                 .orElseThrow(() -> new RuntimeException("Kurs tapılmadı"));
         course.setPrice(newPrice);
     }
+
     public void deleteCourse(String id) {
         courses.removeIf(c -> c.getCourseId().equalsIgnoreCase(id));
     }
+
 
     public void enrollStudent(String studentId, String courseId) {
         Student student = studentService.getStudentById(studentId)
@@ -56,6 +62,7 @@ public class CourseService {
 
         course.setTeacher(teacher);
     }
+
 
     public double getProfit() {
         double totalEarned = courses.stream().mapToDouble(Course::getMoney_earned).sum();
